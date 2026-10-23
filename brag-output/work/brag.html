@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AgentRank brag</title>
+<!-- the product's own stylesheet: real tokens and components -->
+<link rel="stylesheet" href="../../frontend/app/globals.css">
+<style>
+  @font-face { font-family: "Newsreader"; src: url(fonts/newsreader-latin-400-normal.woff2) format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Newsreader"; src: url(fonts/newsreader-latin-500-normal.woff2) format("woff2"); font-weight: 500; }
+  @font-face { font-family: "Geist"; src: url(fonts/Geist-Variable.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url(fonts/GeistMono-Variable.woff2) format("woff2"); font-weight: 100 900; }
+  :root { --font-geist: "Geist"; --font-newsreader: "Newsreader"; --font-geist-mono: "Geist Mono"; --m: 96px; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; margin: 0; }
+  body { background: #111; }
+  .scene { position: absolute; inset: 0; overflow: clip; display: none; }
+  .content { position: absolute; inset: 0; transform-origin: 30% 50%; }
+  .big { font-family: var(--serif); font-weight: 400; letter-spacing: -0.04em; line-height: 0.96; margin: 0; }
+  .line { display: block; overflow: clip; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+  .line > span { display: inline-block; }
+  .lead { font-family: var(--sans); font-size: 38px; line-height: 1.35; letter-spacing: -0.01em; margin: 0; }
+  .ui { transform-origin: top left; position: absolute; }
+  .site { font-family: var(--sans); color: #1d2a24; background: #fffdf8; position: absolute; inset: 0; }
+  .site .nv { display: flex; gap: 9px; font-size: 9px; padding: 9px 12px; align-items: center; }
+  .site .br { font: 500 12px var(--serif); margin-right: auto; }
+  .word { position: absolute; left: -70px; bottom: -0.17em; font-family: var(--serif); font-size: 560px; line-height: 0.8; white-space: nowrap; letter-spacing: -0.05em; color: #fbfbfa; transform-origin: 50% 100%; }
+</style>
+</head>
+<body>
+
+<section class="scene" data-field="#111111"><div class="content" style="color:#fbfbfa;">
+  <div style="position:absolute; left:0; right:0; top:0; height:470px; overflow:clip;"><pre id="log" style="position:absolute; left:var(--m); right:var(--m); top:0; margin:0; font:26px/1.9 var(--mono); color:#fbfbfa; opacity:0.13; white-space:pre;"></pre></div>
+  <h1 class="big" id="hook" style="position:absolute; left:var(--m); top:560px; font-size:176px; color:#fbfbfa;"></h1>
+</div></section>
+
+<section class="scene" data-field="#fdebec"><div class="content">
+  <h2 class="big" id="prob" style="position:absolute; left:var(--m); top:110px; font-size:176px; color:var(--red);"></h2>
+  <div class="ui" id="find" style="right:var(--m); bottom:110px; width:560px; transform:scale(1.65); transform-origin:bottom right;">
+    <div class="card"><div class="card-head"><h3 class="h3">Can an agent find it?</h3><span class="small faint">Without JavaScript</span></div>
+      <div class="row" style="padding:12px 0;"><div class="grow"><p class="title">Prices</p><p class="sub">Only inside product images</p></div><span class="tag red">Not found</span></div>
+      <div class="row" style="padding:12px 0; border-top:1px solid var(--line);"><div class="grow"><p class="title">Opening hours</p><p class="sub">Tue–Sat, 8:00–16:00</p></div><span class="tag green">Found</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="scene" data-field="#111111"><div class="content" style="color:#fbfbfa;">
+  <div id="top3" style="position:absolute; left:var(--m); top:72px; display:flex; align-items:center; gap:16px; font:400 40px var(--serif); letter-spacing:-0.02em;"></div>
+  <p class="lead" id="tag3" style="position:absolute; left:var(--m); top:196px; font-size:58px; letter-spacing:-0.02em; color:#fbfbfa;"></p>
+  <div class="word" id="word3">AgentRank</div>
+</div></section>
+
+<section class="scene" data-field="#edf3ec"><div class="content">
+  <h2 class="big" id="v4" style="position:absolute; left:var(--m); top:96px; font-size:176px; color:var(--green);"></h2>
+  <p class="lead" id="l4" style="position:absolute; left:1056px; right:var(--m); top:130px; color:var(--ink);"></p>
+  <div style="position:absolute; left:var(--m); right:var(--m); top:470px; height:610px; display:grid; grid-template-columns:1fr 1fr; gap:64px; overflow:clip;">
+    <div><p class="lead" style="font-size:32px; color:var(--ink);">Words without JavaScript</p><div class="figure" id="f4a" style="font-size:440px; line-height:0.8; margin-top:36px;">0</div></div>
+    <div><p class="lead" style="font-size:32px; color:var(--ink);">Words once rendered</p><div class="figure" id="f4b" style="font-size:440px; line-height:0.8; margin-top:36px;">0</div></div>
+  </div>
+</div></section>
+
+<section class="scene" data-field="#e1f3fe"><div class="content">
+  <h2 class="big" id="v5" style="position:absolute; left:var(--m); top:96px; font-size:176px; color:var(--blue);"></h2>
+  <p class="lead" id="l5" style="position:absolute; left:1056px; right:var(--m); top:130px; color:var(--ink);"></p>
+  <div id="film" style="position:absolute; left:var(--m); width:1728px; top:420px; display:grid; grid-template-columns:repeat(4, 1fr); gap:32px;"></div>
+  <svg id="cur" width="40" height="40" viewBox="0 0 24 24" style="position:absolute; left:0; top:0;"><path d="M4 2v17.5l4.6-4.3 3.3 7 3.1-1.4-3.3-6.8 6.4-.4z" fill="#1f6c9f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+</div></section>
+
+<section class="scene" data-field="#fbe9f0"><div class="content">
+  <h2 class="big" id="v6" style="position:absolute; left:var(--m); top:96px; font-size:176px; color:var(--rose);"></h2>
+  <blockquote class="big" id="q6" style="position:absolute; left:var(--m); top:420px; width:900px; font-size:84px; line-height:1.02; color:var(--ink);"></blockquote>
+  <div class="ui" id="vis6" style="left:1120px; top:96px; width:470px; transform:scale(1.5);">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:baseline;"><p class="small muted">Named in all answers</p><p class="figure" style="font-size:40px;"><span id="pc6">0</span>%</p></div>
+      <div class="meter" style="margin-top:12px;"><span id="mt6" style="width:0"></span></div>
+      <p class="small faint" style="margin-top:8px;">95% range 16% to 56%, 18 answers</p>
+      <h3 class="h3" style="margin:24px 0 4px;">Recommended instead</h3>
+      <div class="row r6" style="padding:10px 0;"><span class="grow title">northlineroasters.com</span><span class="small muted">9 of 18</span></div>
+      <div class="row r6" style="padding:10px 0; border-top:1px solid var(--line);"><span class="grow title">kettleandcrow.com</span><span class="small muted">7 of 18</span></div>
+      <div class="row r6" style="padding:10px 0; border-top:1px solid var(--line);"><span class="grow title">fieldwork.coffee</span><span class="small muted">6 of 18</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="scene" data-field="#fbfbfa"><div class="content">
+  <h2 class="big" id="v7" style="position:absolute; left:var(--m); top:96px; font-size:176px; color:var(--ink);"></h2>
+  <div class="ui" id="ver7" style="left:var(--m); top:400px; width:560px; transform:scale(1.45);">
+    <div class="card">
+      <div class="card-head"><h3 class="h3">Does this site need agent optimisation?</h3><span class="tag yellow">Recommended</span></div>
+      <div style="display:flex; gap:28px; align-items:flex-end;">
+        <div style="position:relative; width:240px;">
+          <svg viewBox="0 0 240 130" width="240"><path d="M 5 120 A 115 115 0 0 1 235 120" fill="none" stroke="#efeeea" stroke-width="10" stroke-linecap="round"/>
+            <path id="aft7" d="M 5 120 A 115 115 0 0 1 235 120" fill="none" stroke="#cfe6f5" stroke-width="10" stroke-linecap="round"/>
+            <path id="now7" d="M 5 120 A 115 115 0 0 1 235 120" fill="none" stroke="#1f6c9f" stroke-width="10" stroke-linecap="round"/></svg>
+          <div style="position:absolute; left:0; right:0; bottom:0; text-align:center;"><div class="figure" id="sc7" style="font-size:64px;">0</div></div>
+        </div>
+        <div style="flex:1; padding-bottom:6px;"><p class="small muted">Agent-Ready score, out of 100</p><p id="ab7" style="margin-top:6px;">About <span class="figure" style="font-size:28px; color:var(--data);">88</span> after the 6 generated fixes.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="ui" id="fix7" style="left:1056px; top:400px; width:530px; transform:scale(1.45);">
+    <div class="card"><div class="card-head"><h3 class="h3">Fix first</h3><span class="small faint">Points gained</span></div>
+      <div class="row f7" style="padding:12px 0;"><span class="faint num" style="width:30px;">+12</span><div class="grow"><p class="title">Publish prices as structured data</p><p class="sub">Fix ready to copy</p></div></div>
+      <div class="row f7" style="padding:12px 0; border-top:1px solid var(--line);"><span class="faint num" style="width:30px;">+9</span><div class="grow"><p class="title">Let AI crawlers in through robots.txt</p><p class="sub">Fix ready to copy</p></div></div>
+      <div class="row f7" style="padding:12px 0; border-top:1px solid var(--line);"><span class="faint num" style="width:30px;">+8</span><div class="grow"><p class="title">Add the missing pages to sitemap.xml</p><p class="sub">Fix ready to copy</p></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="scene" data-field="#111111"><div class="content" style="color:#fbfbfa;">
+  <div id="top8" style="position:absolute; left:var(--m); top:72px; display:flex; align-items:center; gap:16px; font:400 40px var(--serif); letter-spacing:-0.02em;"></div>
+  <h2 class="big" id="cta8" style="position:absolute; left:var(--m); top:180px; font-size:120px; color:#fbfbfa;"></h2>
+  <p class="lead" id="sub8" style="position:absolute; left:var(--m); top:335px; color:#d9d7d0;"></p>
+  <div class="word" id="word8">AgentRank</div>
+</div></section>
+
+<script>
+const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x)), lerp = (a, b, k) => a + (b - a) * k;
+const prog = (t, t0, d) => clamp((t - t0) / d);
+function bez(x1, y1, x2, y2) {
+  const f = (a, b, u) => 3 * a * u * (1 - u) * (1 - u) + 3 * b * u * u * (1 - u) + u * u * u;
+  return (x) => { if (x <= 0) return 0; if (x >= 1) return 1; let lo = 0, hi = 1, u = x; for (let i = 0; i < 28; i++) { u = (lo + hi) / 2; if (f(x1, x2, u) < x) lo = u; else hi = u; } return f(y1, y2, u); };
+}
+const EXPO = bez(0.16, 1, 0.3, 1), INOUT = bez(0.76, 0, 0.24, 1), SOFT = bez(0.33, 1, 0.68, 1);
+
+// one grid: 96 BPM, a bar is 2.5 s, scene n owns bar n
+const BEAT = 0.625, BAR = 2.5, TOTAL = 20, WIPE = 0.5;
+const S = (n) => n * BAR;
+
+function lines(el, ls) { el.innerHTML = ls.map((l) => `<span class="line"><span>${l}</span></span>`).join(""); return [...el.querySelectorAll(".line > span")]; }
+function rise(sp, t, t0, d = 0.85, st = 0.09) { sp.forEach((s, i) => { const k = EXPO(prog(t, t0 + i * st, d)); s.style.transform = `translateY(${(1 - k) * 135}%)`; s.style.visibility = k > 0 ? "visible" : "hidden"; }); }
+function enter(el, t, t0, d = 0.75, dy = 28) { const k = EXPO(prog(t, t0, d)); el.style.opacity = clamp(k * 1.3); el.style.translate = `0 ${(1 - k) * dy}px`; }
+const MARK = `<svg viewBox="0 0 24 24" width="58" height="58"><rect x="2.5" y="15" width="4" height="6.5" rx="1" fill="#5f5e5a"/><rect x="8.5" y="11" width="4" height="10.5" rx="1" fill="#9c9a93"/><rect x="14.5" y="6" width="4" height="15.5" rx="1" fill="#fbfbfa"/><path d="M13.2 2.2v9.1l2.4-2.2 1.7 3.6 1.6-.7-1.7-3.5 3.3-.2z" fill="#1f6c9f" stroke="#111" stroke-width="1.1" stroke-linejoin="round"/></svg>`;
+
+// ---- content ----
+const UA = ["GPTBot/1.2", "ClaudeBot/1.0", "PerplexityBot/1.0", "Mozilla/5.0 Safari/17.4", "GPTBot/1.2", "ClaudeBot/1.0"];
+const PATHS = ["/", "/beans", "/cuppings", "/visit", "/pricing", "/book"];
+$("#log").textContent = Array.from({ length: 40 }, (_, i) => `203.0.113.${(i * 37) % 250}   GET ${PATHS[i % 6].padEnd(10)} 200   "${UA[i % 6]}"`).join("\n");
+const hook = lines($("#hook"), ["Your next customer", "isn’t a person."]);
+const prob = lines($("#prob"), ["It can’t find", "your prices."]);
+$("#top3").innerHTML = MARK + "AgentRank"; $("#top8").innerHTML = MARK + "AgentRank";
+const tag3 = lines($("#tag3"), ["See your website the way AI agents do."]);
+const v4 = lines($("#v4"), ["It reads."]), l4 = lines($("#l4"), ["Raw HTML, then rendered", "in a real browser."]);
+const v5 = lines($("#v5"), ["It tests."]), l5 = lines($("#l5"), ["A live agent tries", "your booking flow."]);
+const v6 = lines($("#v6"), ["It asks."]), q6 = lines($("#q6"), ["“Which coffee roaster", "ships nationwide?”"]);
+const v7 = lines($("#v7"), ["It fixes."]);
+const cta8 = lines($("#cta8"), ["Get agent-ready."]), sub8 = lines($("#sub8"), ["AI-agent audits, fixes included."]);
+const FR = [
+  ["Open the homepage", `<div class="nv"><span class="br">Halden Coffee</span><span>Shop</span><span>Cuppings</span></div><div style="margin:4px 12px; height:120px; border-radius:4px; background:#1d6b63; color:#fffdf8; padding:14px; display:flex; flex-direction:column; justify-content:flex-end; font:400 19px/1.05 var(--serif);">Roasted on Mondays,<br>at your door by Wednesday.</div>`],
+  ["Click “Book a cupping”", `<div class="nv"><span class="br">Halden Coffee</span><span><u>Cuppings</u></span></div><div style="padding:6px 12px; font:400 20px var(--serif);">Cupping sessions</div><div style="padding:0 12px; font-size:10px; line-height:2.1;">Thursday 6 Nov · 18:00<br>Saturday 8 Nov · 10:00<br>Saturday 15 Nov · Full</div>`],
+  ["Pick Saturday, 10:00", `<div class="nv"><span class="br">Halden Coffee</span><span><u>Cuppings</u></span></div><div style="padding:6px 12px; font:400 20px var(--serif);">Pick a session</div><div style="padding:2px 12px; font-size:10px; display:grid; gap:6px;"><span style="padding:6px 8px; background:#f1f0ec; border-radius:3px;">Thursday 6 Nov · 18:00</span><span style="padding:6px 8px; background:#e3f4f1; outline:1.5px solid #1d6b63; border-radius:3px;">Saturday 8 Nov · 10:00</span></div>`],
+  ["Fill the booking form", `<div class="nv"><span class="br">Halden Coffee</span></div><div style="padding:0 12px; font:400 18px var(--serif);">Your details</div><div style="padding:4px 12px; font-size:9px; display:grid; gap:4px;"><span>Name</span><span style="padding:3px 5px; background:#f1f0ec; border-radius:3px;">Sam Okafor</span><span>Email</span><span style="padding:3px 5px; background:#f1f0ec; border-radius:3px;">sam@example.com</span><span style="margin-top:4px; padding:6px; background:#f9f9f8; border-radius:3px;"><i style="display:inline-block; width:9px; height:9px; background:#fff; outline:1px solid #9c9a93; vertical-align:-1px; margin-right:4px;"></i>I’m not a robot</span></div>`],
+];
+$("#film").innerHTML = FR.map(([cap, page], i) => `<div class="frame${i === 3 ? " stuck" : ""}"><div class="shot" style="position:relative; cursor:default;"><div class="site">${page}</div></div><p style="margin:14px 0 0; font:500 24px var(--sans); color:var(--ink);">${cap}</p><p class="st" style="margin:4px 0 0; font:400 22px var(--sans); color:${i === 3 ? "var(--red)" : "var(--muted)"};">${i === 3 ? "Stuck: CAPTCHA" : "Done"}</p></div>`).join("");
+const R = 115, LEN = Math.PI * R;
+["#now7", "#aft7"].forEach((s) => { $(s).setAttribute("stroke-dasharray", LEN); $(s).setAttribute("stroke-dashoffset", LEN); });
+
+const scenes = $$(".scene").map((el, i) => ({ el, i, field: el.dataset.field, content: el.querySelector(".content") }));
+const fns = [
+  (t) => { rise(hook, t, 0.1, 0.8, 0.12); $("#log").style.translate = `0 ${-t * 22}px`; },
+  (t) => { rise(prob, t, S(1) - 0.25); enter($("#find"), t, S(1) + 0.35, 0.8, 30); },
+  (t) => {
+    const k = EXPO(prog(t, S(2), 1.5)); $("#word3").style.translate = `0 ${(1 - k) * 125}%`;
+    $("#word3").style.scale = 1 - 0.04 * SOFT(prog(t, S(2) + 1, 1.5));
+    enter($("#top3"), t, S(2) + 0.25, 0.7, 14); rise(tag3, t, S(2) + 0.3);
+  },
+  (t) => {
+    rise(v4, t, S(3) - 0.25); rise(l4, t, S(3) + 0.05);
+    const ka = EXPO(prog(t, S(3) + 0.2, 1.0)), kb = EXPO(prog(t, S(3) + 0.45, 1.2));
+    $("#f4a").textContent = Math.round(38 * ka); $("#f4b").textContent = Math.round(1412 * kb).toLocaleString("en-GB");
+    enter($("#f4a"), t, S(3) + 0.2, 0.8, 70); enter($("#f4b"), t, S(3) + 0.45, 0.8, 70);
+  },
+  (t) => {
+    rise(v5, t, S(4) - 0.25); rise(l5, t, S(4) + 0.05);
+    const fr = $$("#film .frame");
+    fr.forEach((f, i) => { enter(f, t, S(4) - 0.1 + i * 0.07, 0.7, 30); f.querySelector(".st").style.opacity = t >= S(4) + i * BEAT + (i ? -BEAT / 2 : 0) + 0.05 ? 1 : 0; });
+    // the cursor clicks on the off-eighths (10.3125, 10.9375, 11.5625) and moves one frame per click
+    const clicks = [1, 2, 3].map((b) => S(4) + b * BEAT - BEAT / 2);
+    let pos = 0; clicks.forEach((c) => (pos += INOUT(prog(t, c - 0.42, 0.42))));
+    const col = (1728 - 96) / 4 + 32, x = 96 + pos * col + 408 * 0.6, y = 420 + 150 - Math.sin((pos % 1) * Math.PI) * 24;
+    $("#cur").style.translate = `${x}px ${y}px`; $("#cur").style.opacity = EXPO(prog(t, S(4), 0.3));
+    const ring = EXPO(prog(t, clicks[2], 0.4));
+    fr[3].querySelector(".shot").style.boxShadow = `0 0 0 2px #fff, 0 0 0 ${3.5 * ring}px rgba(159,47,45,${ring})`;
+  },
+  (t) => {
+    rise(v6, t, S(5) - 0.25); rise(q6, t, S(5) + 0.05);
+    enter($("#vis6"), t, S(5) + 0.1, 0.8, 30);
+    const k = EXPO(prog(t, S(5) + 0.3, 1.1)); $("#pc6").textContent = Math.round(33 * k); $("#mt6").style.width = `${33 * k}%`;
+    $$(".r6").forEach((r, i) => enter(r, t, S(5) + 0.7 + i * 0.09, 0.6, 10));
+  },
+  (t) => {
+    rise(v7, t, S(6) - 0.25);
+    enter($("#ver7"), t, S(6) - 0.05, 0.8, 30); enter($("#fix7"), t, S(6) + 0.1, 0.8, 30);
+    const ks = EXPO(prog(t, S(6) + 0.1, 1.0)); $("#now7").setAttribute("stroke-dashoffset", LEN * (1 - 0.46 * ks)); $("#sc7").textContent = Math.round(46 * ks);
+    const ka = EXPO(prog(t, S(6) + 0.6, 1.0)); $("#aft7").setAttribute("stroke-dashoffset", LEN * (1 - 0.88 * ka));
+    enter($("#ab7"), t, S(6) + 0.7, 0.6, 8);
+    $$(".f7").forEach((r, i) => enter(r, t, S(6) + 0.35 + i * 0.09, 0.6, 10));
+  },
+  (t) => {
+    const k = EXPO(prog(t, S(7), 1.5)); $("#word8").style.translate = `0 ${(1 - k) * 125}%`;
+    $("#word8").style.scale = 0.96 + 0.04 * SOFT(prog(t, S(7) + 0.4, 2));
+    enter($("#top8"), t, S(7) + 0.2, 0.7, 14); rise(cta8, t, S(7) + 0.15); rise(sub8, t, S(7) + 0.4);
+  },
+];
+
+function seek(t) {
+  scenes.forEach((s) => {
+    const start = S(s.i) - (s.i ? WIPE : 0), end = S(s.i + 1);
+    if (t < start || t > end + 0.02) { s.el.style.display = "none"; return; }
+    s.el.style.display = "block"; s.el.style.zIndex = s.i + 1; s.el.style.background = s.field;
+    // the field wipes up from the bottom, landing on the bar line
+    const k = s.i ? INOUT(prog(t, start, WIPE)) : 1;
+    s.el.style.clipPath = k < 1 ? `inset(${(1 - k) * 100}% 0 0 0)` : "none";
+    // a slow trailer push-in across the bar; the next wipe lifts this content as it covers it
+    const push = 1 + 0.025 * prog(t, S(s.i), BAR);
+    const lift = s.i < 7 ? INOUT(prog(t, end - WIPE, WIPE)) : 0;
+    s.content.style.transform = `translateY(${-80 * lift}px) scale(${push})`;
+    fns[s.i](t);
+  });
+  document.body.style.opacity = 1 - INOUT(prog(t, TOTAL - 0.5, 0.5));
+}
+window.seek = seek;
+</script>
+</body>
+</html>
