@@ -1,6 +1,13 @@
 # AgentRank pitch video
 
-`agentrank-pitch.mp4`: a 2-minute (119 s) 1080p30 sales pitch with a voiceover and an original soundtrack.
+`agentrank-pitch.mp4`: a 2-minute (119 s) 1080p60 sales pitch with a voiceover and an original soundtrack.
+
+The look is AgentRank's own: the dashboard's warm monochrome tokens, Newsreader for statements and
+figures, Geist for text, one flat colour field per chapter, and the product's real interface (verdict
+card and gauge, Fix first, agent replay filmstrip, AI visibility) built at true scale. It follows the
+taste-skill house rules: no gradients, glows, glass, decorative graphics, monospace labels or index
+numbers. Motion uses expo-out line rises out of masks, quart in-out colour wipes between chapters and
+short exits before each arrival; nothing cross-fades or blurs.
 
 ## Monologue
 
@@ -28,8 +35,9 @@
 >
 > AgentRank. Get agent ready.
 
-The numbers, brands and domains shown on screen (score 46 → 88, "Northline Roasters", and so on) are
-illustrative, not results from a real audit.
+The customer site (Halden Coffee), its numbers and the competitor domains on screen (score 46 → 88,
+northlineroasters.com, and so on) are illustrative, not results from a real audit. The server log uses
+documentation IP ranges.
 
 ## How it is made
 
@@ -41,8 +49,8 @@ Everything runs offline; nothing is licensed from a stock library.
 | `tts.mjs` | Voiceover with the open Kokoro-82M TTS model (Apache-2.0, voice `af_heart`), via `kokoro-js` + `kokoro-q8-shards` from npm |
 | `timeline.json` | Start time and length of each line (the reveal lands on a bar of the 96 BPM track) |
 | `music.py` | Synthesises the soundtrack with numpy (A minor pads, riser, drop on the logo reveal, groove, arpeggio, breakdown, final hit) and mixes it under the voice with ducking |
-| `scene.html` | The motion graphics: a page with a deterministic `seek(t)` |
-| `render.mjs` | Steps `seek(t)` at 30 fps in headless Chromium (Playwright) and pipes the frames to ffmpeg |
+| `scene.html` | The motion graphics: a page with a deterministic `seek(t)`; fonts (OFL) in `fonts/` |
+| `render.mjs` | Steps `seek(t)` at 60 fps in headless Chromium (Playwright) and pipes the frames to ffmpeg |
 
 To re-render after editing the script (from this folder, with the npm packages above, numpy, Playwright and ffmpeg):
 
@@ -51,6 +59,6 @@ node tts.mjs script.json vo af_heart 1            # needs kokoro-q8.onnx (the jo
 # recompute timeline.json from the new clip lengths, then:
 python3 music.py                                   # writes mix.f32
 ffmpeg -f f32le -ar 44100 -ac 2 -i mix.f32 -af loudnorm=I=-15:TP=-1 mix.wav
-node render.mjs chunk 0 3582 video.mp4
+node render.mjs chunk 0 7164 video.mp4
 ffmpeg -i video.mp4 -i mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 256k -shortest agentrank-pitch.mp4
 ```

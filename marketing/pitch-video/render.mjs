@@ -6,7 +6,7 @@ const { chromium } = require("playwright");
 
 const [,, mode, ...args] = process.argv;
 const tl = JSON.parse(fs.readFileSync("timeline.json", "utf8"));
-const FPS = 30;
+const FPS = 60;
 const browser = await chromium.launch();
 
 async function newPage() {
