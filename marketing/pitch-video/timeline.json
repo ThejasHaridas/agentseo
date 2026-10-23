@@ -1,0 +1,78 @@
+{
+ "bpm": 96,
+ "total": 119.4,
+ "lines": [
+  {
+   "id": "s01",
+   "start": 2.0,
+   "dur": 2.9,
+   "text": "The internet has a new kind of visitor."
+  },
+  {
+   "id": "s02",
+   "start": 5.5,
+   "dur": 6.7,
+   "text": "It doesn't scroll. It doesn't see your ads. It reads, compares, and decides, on behalf of your customers."
+  },
+  {
+   "id": "s03",
+   "start": 12.9,
+   "dur": 11.35,
+   "text": "ChatGPT. Claude. Perplexity. And browser agents that book, buy, and fill in forms. But most websites were built for people, and for Google. Not for them."
+  },
+  {
+   "id": "s04",
+   "start": 27.5,
+   "dur": 4.475,
+   "text": "Meet AgentRank. See your website the way AI agents do."
+  },
+  {
+   "id": "s05",
+   "start": 33.175,
+   "dur": 9.775,
+   "text": "One audit. Four questions. Can agents read it? Can agents use it? Do AI assistants recommend it? And how strong is your classic SEO?"
+  },
+  {
+   "id": "s06",
+   "start": 43.85,
+   "dur": 14.175,
+   "text": "AgentRank crawls your site twice: raw HTML, and fully rendered in a real browser. It checks AI crawler access, structured data, and whether your prices, hours and contact details can actually be found."
+  },
+  {
+   "id": "s07",
+   "start": 58.925,
+   "dur": 13.375,
+   "text": "Then a live AI agent tries your site's key tasks, and records every step with a screenshot. So you see exactly where it got stuck. And it's safe. It never submits a booking, an order, or a payment."
+  },
+  {
+   "id": "s08",
+   "start": 73.2,
+   "dur": 8.8,
+   "text": "Next, it asks AI assistants the questions your customers ask. Are you named? Are you cited? And who gets recommended instead?"
+  },
+  {
+   "id": "s09",
+   "start": 82.9,
+   "dur": 13.95,
+   "text": "You get a clear verdict, an Agent Ready score, and the score you'll reach after fixing. Plus ready to paste fixes: structured data, robots files, sitemaps, and meta tags. Each one linked to the problem it solves."
+  },
+  {
+   "id": "s10",
+   "start": 97.75,
+   "dur": 7.45,
+   "text": "Projects for every client. Agent replays. A 3D map of your site. And transparent, versioned scoring."
+  },
+  {
+   "id": "s11",
+   "start": 106.6,
+   "dur": 4.275,
+   "text": "Your next customer might not be a person. Make sure they can find you."
+  },
+  {
+   "id": "s12",
+   "start": 111.875,
+   "dur": 2.525,
+   "text": "AgentRank. Get agent ready."
+  }
+ ]
+}
