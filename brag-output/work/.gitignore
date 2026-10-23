@@ -1,0 +1,7 @@
+# Render intermediates, rebuilt by score.py and render.mjs
+*.mp4
+*.wav
+*.f32
+*.raw
+*.png
+stills/
