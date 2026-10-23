@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AgentRank brag, vertical</title>
+<!-- the product's own stylesheet: real tokens and components -->
+<link rel="stylesheet" href="../../frontend/app/globals.css">
+<style>
+  @font-face { font-family: "Newsreader"; src: url(fonts/newsreader-latin-400-normal.woff2) format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Newsreader"; src: url(fonts/newsreader-latin-500-normal.woff2) format("woff2"); font-weight: 500; }
+  @font-face { font-family: "Geist"; src: url(fonts/Geist-Variable.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url(fonts/GeistMono-Variable.woff2) format("woff2"); font-weight: 100 900; }
+  :root { --font-geist: "Geist"; --font-newsreader: "Newsreader"; --font-geist-mono: "Geist Mono"; --m: 72px; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; margin: 0; }
+  body { background: #111; }
+  .scene { position: absolute; inset: 0; overflow: clip; display: none; }
+  .content { position: absolute; inset: 0; transform-origin: 50% 40%; }
+  .big { font-family: var(--serif); font-weight: 400; letter-spacing: -0.04em; line-height: 0.96; margin: 0; }
+  .line { display: block; overflow: clip; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+  .line > span { display: inline-block; }
+  .lead { font-family: var(--sans); font-size: 40px; line-height: 1.35; letter-spacing: -0.01em; margin: 0; }
+  .ui { transform-origin: top left; position: absolute; }
+  .site { font-family: var(--sans); color: #1d2a24; background: #fffdf8; position: absolute; inset: 0; }
+  .site .nv { display: flex; gap: 9px; font-size: 10px; padding: 10px 13px; align-items: center; }
+  .site .br { font: 500 13px var(--serif); margin-right: auto; }
+  .vword { position: absolute; right: -150px; top: 50%; writing-mode: vertical-rl; font-family: var(--serif); font-size: 640px; line-height: 0.8; white-space: nowrap; letter-spacing: -0.05em; color: #fbfbfa; translate: 0 -50%; }
+  .band { height: 480px; display: flex; align-items: center; justify-content: space-between; gap: 40px; padding: 0 var(--m); }
+  .toggle { position: relative; width: 2.1em; height: 1.1em; border-radius: 1em; background: #e2e1dd; flex: none; font-size: 72px; }
+  .toggle i { position: absolute; top: 0.12em; left: 0.12em; width: 0.86em; height: 0.86em; border-radius: 50%; background: #fff; }
+</style>
+</head>
+<body>
+
+<!-- 1. hook -->
+<section class="scene" data-field="#111111"><div class="content" style="color:#fbfbfa;">
+  <div style="position:absolute; left:0; right:0; top:0; height:980px; overflow:clip;"><pre id="log" style="position:absolute; left:var(--m); top:0; margin:0; font:24px/1.9 var(--mono); color:#fbfbfa; opacity:0.16; white-space:pre;"></pre></div>
+  <h1 class="big" id="hook" style="position:absolute; left:var(--m); top:1160px; font-size:150px; color:#fbfbfa;"></h1>
+</div></section>
+
+<!-- 2. what it does -->
+<section class="scene" data-field="#fbfbfa"><div class="content">
+  <p class="big" id="neg" style="position:absolute; left:var(--m); top:380px; font-size:72px; line-height:1.15; color:var(--ink);"></p>
+  <div class="big" id="verbs" style="position:absolute; left:var(--m); top:780px; font-size:220px; line-height:1.0; color:var(--ink);"></div>
+</div></section>
+
+<!-- 3. problem -->
+<section class="scene" data-field="#fdebec"><div class="content">
+  <h2 class="big" id="prob" style="position:absolute; left:var(--m); top:330px; font-size:160px; color:var(--red);"></h2>
+  <div class="ui" id="find" style="left:var(--m); top:1100px; width:585px; transform:scale(1.6);">
+    <div class="card"><div class="card-head"><h3 class="h3">Can an agent find it?</h3><span class="small faint">Without JavaScript</span></div>
+      <div class="row fr3" style="padding:12px 0;"><div class="grow"><p class="title">Prices</p><p class="sub">Only inside product images</p></div><span class="tag red">Not found</span></div>
+      <div class="row fr3" style="padding:12px 0; border-top:1px solid var(--line);"><div class="grow"><p class="title">Opening hours</p><p class="sub">Tue–Sat, 8:00–16:00</p></div><span class="tag green">Found</span></div>
+      <div class="row fr3" style="padding:12px 0; border-top:1px solid var(--line);"><div class="grow"><p class="title">Phone and address</p><p class="sub">14 Granary Lane, Leeds</p></div><span class="tag green">Found</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 4. stakes -->
+<section class="scene" data-field="#fdebec"><div class="content">
+  <h2 class="big" id="built" style="position:absolute; left:var(--m); top:200px; font-size:96px; line-height:1.05; color:var(--red);"></h2>
+  <p class="big" id="notf" style="position:absolute; left:var(--m); top:960px; font-size:300px; letter-spacing:-0.05em; line-height:0.9; color:var(--red); transform-origin:left bottom;"></p>
+</div></section>
+
+<!-- 5. reveal -->
+<section class="scene" data-field="#111111"><div class="content" style="color:#fbfbfa;">
+  <div id="top5" style="position:absolute; left:var(--m); top:96px; display:flex; align-items:center; gap:16px; font:400 44px var(--serif); letter-spacing:-0.02em;"></div>
+  <p class="big" id="tag5" style="position:absolute; left:var(--m); top:640px; width:620px; font-size:92px; line-height:1.02; color:#fbfbfa;"></p>
+  <p class="lead" id="sub5" style="position:absolute; left:var(--m); top:1280px; width:520px; color:#d9d7d0;"></p>
+  <div class="vword" id="word5">AgentRank</div>
+</div></section>
+
+<!-- 6. reads -->
+<section class="scene" data-field="#edf3ec"><div class="content">
+  <h2 class="big" id="h6" style="position:absolute; left:var(--m); top:150px; font-size:140px; color:var(--green);"></h2>
+  <div style="position:absolute; left:var(--m); right:var(--m); top:540px; display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+    <div id="c6a"><p class="lead" style="font-size:32px; color:var(--ink);">Words without JavaScript</p><div class="figure" id="f6a" style="font-size:220px; line-height:0.9; margin-top:16px;">0</div></div>
+    <div id="c6b"><p class="lead" style="font-size:32px; color:var(--ink);">Words once rendered</p><div class="figure" id="f6b" style="font-size:220px; line-height:0.9; margin-top:16px;">0</div></div>
+  </div>
+  <div class="ui" id="files6" style="left:var(--m); top:1000px; width:585px; transform:scale(1.6);">
+    <div class="card"><div class="card-head"><h3 class="h3">Files agents look for</h3><span class="small faint">halden.coffee</span></div>
+      <div class="row f6" style="padding:12px 0;"><div class="grow"><p class="title">robots.txt</p><p class="sub">Blocks GPTBot and ClaudeBot</p></div><span class="tag red">Blocked</span></div>
+      <div class="row f6" style="padding:12px 0; border-top:1px solid var(--line);"><div class="grow"><p class="title">Structured data</p><p class="sub">No JSON-LD on 25 of 25 pages</p></div><span class="tag red">None</span></div>
+      <div class="row f6" style="padding:12px 0; border-top:1px solid var(--line);"><div class="grow"><p class="title">sitemap.xml</p><p class="sub">Lists 25 of 25 crawled pages</p></div><span class="tag green">Found</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 7. tests -->
+<section class="scene" data-field="#e1f3fe"><div class="content">
+  <h2 class="big" id="h7" style="position:absolute; left:var(--m); top:150px; font-size:140px; color:var(--blue);"></h2>
+  <div id="film" style="position:absolute; left:var(--m); width:936px; top:520px; display:grid; grid-template-columns:1fr 1fr; gap:36px;"></div>
+  <svg id="cur" width="44" height="44" viewBox="0 0 24 24" style="position:absolute; left:0; top:0;"><path d="M4 2v17.5l4.6-4.3 3.3 7 3.1-1.4-3.3-6.8 6.4-.4z" fill="#1f6c9f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  <p class="lead" id="l7" style="position:absolute; left:var(--m); top:1520px; width:900px; color:var(--ink);"></p>
+</div></section>
+
+<!-- 8. safe -->
+<section class="scene" data-field="#fbfbfa"><div class="content">
+  <h2 class="big" id="h8" style="position:absolute; left:var(--m); top:300px; font-size:230px; line-height:0.92; letter-spacing:-0.05em; color:var(--ink);"></h2>
+  <p class="lead" id="l8" style="position:absolute; left:var(--m); top:1300px; width:900px; color:var(--ink);"></p>
+</div></section>
+
+<!-- 9. asks -->
+<section class="scene" data-field="#fbe9f0"><div class="content">
+  <h2 class="big" id="h9" style="position:absolute; left:var(--m); top:150px; font-size:120px; color:var(--rose);"></h2>
+  <blockquote class="big" id="q9" style="position:absolute; left:var(--m); top:640px; width:936px; font-size:84px; line-height:1.04; color:var(--ink);"></blockquote>
+  <div class="ui" id="vis9" style="left:var(--m); top:1000px; width:585px; transform:scale(1.6);">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:baseline;"><p class="small muted">Named in all answers</p><p class="figure" style="font-size:40px;"><span id="pc9">0</span>%</p></div>
+      <div class="meter" style="margin-top:12px;"><span id="mt9" style="width:0"></span></div>
+      <p class="small faint" style="margin-top:8px;">95% range 16% to 56%, 18 answers across 3 models</p>
+      <h3 class="h3" style="margin:22px 0 4px;">Recommended instead</h3>
+      <div class="row r9" style="padding:10px 0;"><span class="grow title">northlineroasters.com</span><span class="small muted">9 of 18 answers</span></div>
+      <div class="row r9" style="padding:10px 0; border-top:1px solid var(--line);"><span class="grow title">kettleandcrow.com</span><span class="small muted">7 of 18 answers</span></div>
+      <div class="row r9" style="padding:10px 0; border-top:1px solid var(--line);"><span class="grow title">fieldwork.coffee</span><span class="small muted">6 of 18 answers</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 10. fixes -->
+<section class="scene" data-field="#e3f4f1"><div class="content">
+  <h2 class="big" id="h10" style="position:absolute; left:var(--m); top:150px; font-size:130px; color:var(--teal);"></h2>
+  <div class="ui" id="ver10" style="left:var(--m); top:500px; width:585px; transform:scale(1.6);">
+    <div class="card">
+      <div class="card-head"><h3 class="h3">Does this site need agent optimisation?</h3><span class="tag yellow">Recommended</span></div>
+      <div style="display:flex; gap:28px; align-items:flex-end;">
+        <div style="position:relative; width:240px;">
+          <svg viewBox="0 0 240 130" width="240"><path d="M 5 120 A 115 115 0 0 1 235 120" fill="none" stroke="#efeeea" stroke-width="10" stroke-linecap="round"/>
+            <path id="aft10" d="M 5 120 A 115 115 0 0 1 235 120" fill="none" stroke="#cfe6f5" stroke-width="10" stroke-linecap="round"/>
+            <path id="now10" d="M 5 120 A 115 115 0 0 1 235 120" fill="none" stroke="#1f6c9f" stroke-width="10" stroke-linecap="round"/></svg>
+          <div style="position:absolute; left:0; right:0; bottom:0; text-align:center;"><div class="figure" id="sc10" style="font-size:64px;">0</div></div>
+        </div>
+        <div style="flex:1; padding-bottom:6px;"><p class="small muted">Agent-Ready score, out of 100</p><p id="ab10" style="margin-top:6px;">About <span class="figure" style="font-size:28px; color:var(--data);">88</span> after the 6 generated fixes.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="ui" id="fix10" style="left:var(--m); top:1000px; width:585px; transform:scale(1.6);">
+    <div class="card"><div class="card-head"><h3 class="h3">Fix first</h3><span class="small faint">Points gained</span></div>
+      <div class="row f10" style="padding:12px 0; align-items:flex-start;"><span class="faint num" style="width:30px;">+12</span><div class="grow"><p class="title">Publish prices as structured data</p><p class="sub">Fix ready to copy</p>
+        <div id="acc10" style="height:0; overflow:clip;"><pre class="code" style="margin-top:10px; font-size:11px; padding:12px 14px;">&lt;script type="application/ld+json"&gt;
+{ "@type": "Product", "name": "Kiambu AA",
+  "offers": { "@type": "Offer",
+    "price": "14.00", "priceCurrency": "GBP" } }
+&lt;/script&gt;</pre></div></div></div>
+      <div class="row f10" style="padding:12px 0; border-top:1px solid var(--line);"><span class="faint num" style="width:30px;">+9</span><div class="grow"><p class="title">Let AI crawlers in through robots.txt</p><p class="sub">Fix ready to copy</p></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 11. features -->
+<section class="scene" data-field="#fbfbfa"><div class="content" id="bands"></div></section>
+
+<!-- 12. outro -->
+<section class="scene" data-field="#111111"><div class="content" style="color:#fbfbfa;">
+  <div id="top12" style="position:absolute; left:var(--m); top:96px; display:flex; align-items:center; gap:16px; font:400 44px var(--serif); letter-spacing:-0.02em;"></div>
+  <h2 class="big" id="cta12" style="position:absolute; left:var(--m); top:640px; width:620px; font-size:120px; color:#fbfbfa;"></h2>
+  <p class="lead" id="sub12" style="position:absolute; left:var(--m); top:1000px; width:520px; color:#d9d7d0;"></p>
+  <div class="vword" id="word12">AgentRank</div>
+</div></section>
+
+<script>
+const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x)), lerp = (a, b, k) => a + (b - a) * k;
+const prog = (t, t0, d) => clamp((t - t0) / d);
+function bez(x1, y1, x2, y2) {
+  const f = (a, b, u) => 3 * a * u * (1 - u) * (1 - u) + 3 * b * u * u * (1 - u) + u * u * u;
+  return (x) => { if (x <= 0) return 0; if (x >= 1) return 1; let lo = 0, hi = 1, u = x; for (let i = 0; i < 28; i++) { u = (lo + hi) / 2; if (f(x1, x2, u) < x) lo = u; else hi = u; } return f(y1, y2, u); };
+}
+const EXPO = bez(0.16, 1, 0.3, 1), INOUT = bez(0.76, 0, 0.24, 1), SOFT = bez(0.33, 1, 0.68, 1), EXIT = bez(0.55, 0.055, 0.675, 0.19);
+
+// one grid: 96 BPM, a bar is 2.5 s, 20 bars
+const BEAT = 0.625, BAR = 2.5, TOTAL = 50, WIPE = 0.5;
+const B = (n) => n * BAR;
+
+function lines(el, ls) { el.innerHTML = ls.map((l) => `<span class="line"><span>${l}</span></span>`).join(""); return [...el.querySelectorAll(".line > span")]; }
+function rise(sp, t, t0, d = 0.85, st = 0.09) { sp.forEach((s, i) => { const k = EXPO(prog(t, t0 + i * st, d)); s.style.transform = `translateY(${(1 - k) * 135}%)`; s.style.visibility = k > 0 ? "visible" : "hidden"; }); }
+function enter(el, t, t0, d = 0.75, dy = 28) { const k = EXPO(prog(t, t0, d)); el.style.opacity = clamp(k * 1.3); el.style.translate = `0 ${(1 - k) * dy}px`; }
+const grey = (el, k) => (el.style.color = `rgb(${lerp(17, 165, k)},${lerp(17, 164, k)},${lerp(17, 159, k)})`);
+const MARK = `<svg viewBox="0 0 24 24" width="62" height="62"><rect x="2.5" y="15" width="4" height="6.5" rx="1" fill="#5f5e5a"/><rect x="8.5" y="11" width="4" height="10.5" rx="1" fill="#9c9a93"/><rect x="14.5" y="6" width="4" height="15.5" rx="1" fill="#fbfbfa"/><path d="M13.2 2.2v9.1l2.4-2.2 1.7 3.6 1.6-.7-1.7-3.5 3.3-.2z" fill="#1f6c9f" stroke="#111" stroke-width="1.1" stroke-linejoin="round"/></svg>`;
+
+// ---- content ----
+const UA = ["GPTBot/1.2", "Mozilla/5.0 Safari/17.4", "ClaudeBot/1.0", "PerplexityBot/1.0", "Mozilla/5.0 Chrome/131", "GPTBot/1.2"];
+const PATHS = ["/", "/beans", "/cuppings", "/visit", "/pricing", "/book"];
+$("#log").innerHTML = Array.from({ length: 30 }, (_, i) => { const ua = UA[i % 6]; const bot = !ua.startsWith("Mozilla"); return `203.0.113.${(i * 37) % 250}  GET ${PATHS[i % 6].padEnd(9)} 200  <span class="${bot ? "bot" : ""}">${ua}</span>`; }).join("\n");
+const hook = lines($("#hook"), ["Your next", "customer isn’t", "a person."]);
+const neg = lines($("#neg"), ["It doesn’t scroll.", "It doesn’t see your ads."]);
+const verbs = lines($("#verbs"), ["Reads.", "Compares.", "Decides."]);
+const prob = lines($("#prob"), ["It can’t find", "your prices."]);
+const built = lines($("#built"), ["Most websites were", "built for people,", "and for Google."]);
+const notf = lines($("#notf"), ["Not for", "them."]);
+$("#top5").innerHTML = MARK + "AgentRank"; $("#top12").innerHTML = MARK + "AgentRank";
+const tag5 = lines($("#tag5"), ["See your", "website the", "way AI", "agents do."]);
+const sub5 = lines($("#sub5"), ["Classic SEO and AI-agent", "audits, with the fixes", "written for you."]);
+const h6 = lines($("#h6"), ["Can agents", "read it?"]);
+const h7 = lines($("#h7"), ["Can agents", "use it?"]);
+const l7 = lines($("#l7"), ["A live agent tries your key tasks.", "Every step recorded, with a screenshot."]);
+const h8 = lines($("#h8"), ["It stops", "before", "Submit."]);
+const l8 = lines($("#l8"), ["Bookings, orders, payments and messages", "are never sent. Ever."]);
+const h9 = lines($("#h9"), ["Do AI assistants", "recommend it?"]);
+const q9 = lines($("#q9"), ["“Which coffee roaster", "ships nationwide?”"]);
+const h10 = lines($("#h10"), ["Then it writes", "the fixes."]);
+const cta12 = lines($("#cta12"), ["Get", "agent-", "ready."]);
+const sub12 = lines($("#sub12"), ["AI-agent audits,", "fixes included."]);
+
+const FR = [
+  ["Open the homepage", `<div class="nv"><span class="br">Halden Coffee</span><span>Shop</span><span>Cuppings</span></div><div style="margin:4px 13px; height:140px; border-radius:4px; background:#1d6b63; color:#fffdf8; padding:14px; display:flex; flex-direction:column; justify-content:flex-end; font:400 21px/1.05 var(--serif);">Roasted on Mondays,<br>at your door by Wednesday.</div>`],
+  ["Click “Book a cupping”", `<div class="nv"><span class="br">Halden Coffee</span><span><u>Cuppings</u></span></div><div style="padding:6px 13px; font:400 22px var(--serif);">Cupping sessions</div><div style="padding:0 13px; font-size:11px; line-height:2.1;">Thursday 6 Nov · 18:00<br>Saturday 8 Nov · 10:00<br>Saturday 15 Nov · Full</div>`],
+  ["Pick Saturday, 10:00", `<div class="nv"><span class="br">Halden Coffee</span><span><u>Cuppings</u></span></div><div style="padding:6px 13px; font:400 22px var(--serif);">Pick a session</div><div style="padding:2px 13px; font-size:11px; display:grid; gap:7px;"><span style="padding:7px 9px; background:#f1f0ec; border-radius:3px;">Thursday 6 Nov · 18:00</span><span style="padding:7px 9px; background:#e3f4f1; outline:1.5px solid #1d6b63; border-radius:3px;">Saturday 8 Nov · 10:00</span></div>`],
+  ["Fill the booking form", `<div class="nv"><span class="br">Halden Coffee</span></div><div style="padding:0 13px; font:400 20px var(--serif);">Your details</div><div style="padding:4px 13px; font-size:10px; display:grid; gap:5px;"><span>Name</span><span style="padding:4px 6px; background:#f1f0ec; border-radius:3px;">Sam Okafor</span><span>Email</span><span style="padding:4px 6px; background:#f1f0ec; border-radius:3px;">sam@example.com</span><span style="margin-top:4px; padding:7px; background:#f9f9f8; border-radius:3px;"><i style="display:inline-block; width:10px; height:10px; background:#fff; outline:1px solid #9c9a93; vertical-align:-1px; margin-right:5px;"></i>I’m not a robot</span></div>`],
+];
+$("#film").innerHTML = FR.map(([cap, page], i) => `<div class="frame${i === 3 ? " stuck" : ""}"><div class="shot" style="position:relative; cursor:default;"><div class="site">${page}</div></div><p style="margin:14px 0 0; font:500 28px var(--sans); color:var(--ink);">${cap}</p><p class="st" style="margin:4px 0 0; font:400 26px var(--sans); color:${i === 3 ? "var(--red)" : "var(--muted)"};">${i === 3 ? "Stuck: CAPTCHA" : "Done"}</p></div>`).join("");
+const BANDS = [["Projects for", "every client.", "#e3f4f1"], ["Agent replays", "of every step.", "#fbe9f0"], ["A 3D map", "of your site.", "#e1f3fe"], ["Transparent,", "versioned scoring.", "#edf3ec"]];
+$("#bands").innerHTML = BANDS.map(([a, b]) => `<div class="band"><p class="big bs" style="font-size:96px; line-height:1.02;">${a}<br>${b}</p><div class="toggle"><i></i></div></div>`).join("");
+const LEN = Math.PI * 115;
+["#now10", "#aft10"].forEach((s) => { $(s).setAttribute("stroke-dasharray", LEN); $(s).setAttribute("stroke-dashoffset", LEN); });
+
+// scenes: [first bar, bars]
+const SC = [[0, 2], [2, 1], [3, 2], [5, 1], [6, 2], [8, 2], [10, 2], [12, 1], [13, 2], [15, 2], [17, 2], [19, 1]];
+const fns = [
+  (t) => {
+    rise(hook, t, 0.1, 0.85, 0.12); $("#log").style.translate = `0 ${-t * 20}px`;
+    const k = EXPO(prog(t, B(1), 0.6));
+    $$("#log .bot").forEach((b) => { b.style.color = `rgb(${lerp(251, 120, k)},${lerp(251, 180, k)},${lerp(250, 232, k)})`; });
+    $("#log").style.opacity = 0.16 + 0.24 * k;
+  },
+  (t) => {
+    rise(neg, t, B(2) - 0.2, 0.7, 0.12);
+    const v = [B(2) + 0.5 * BEAT, B(2) + 1.5 * BEAT, B(2) + 2.5 * BEAT].map((x) => x - 0.15);
+    verbs.forEach((s, i) => rise([s], t, v[i], 0.7));
+    $$("#neg .line > span").forEach((s) => grey(s, OUT2(prog(t, v[0] - 0.1, 0.4))));
+  },
+  (t) => {
+    rise(prob, t, B(3) - 0.25);
+    enter($("#find"), t, B(3) + 0.4, 0.8, 30);
+    $$(".fr3 .tag").forEach((g, i) => enter(g, t, [B(3) + 2 * BEAT, B(4), B(4) + BEAT][i], 0.5, 8));
+  },
+  (t) => {
+    rise(built, t, B(5) - 0.1, 0.8, 0.1);
+    rise(notf, t, B(5) + 2 * BEAT - 0.1, 0.9, 0.12);
+    $("#notf").style.scale = 1 + 0.03 * SOFT(prog(t, B(5) + 2 * BEAT + 0.6, BAR - 2 * BEAT));
+  },
+  (t) => {
+    const k = EXPO(prog(t, B(6), 1.6));
+    $("#word5").style.transform = `translateY(${(1 - k) * 1900}px) translateY(${-60 * SOFT(prog(t, B(6) + 1.2, 3.8))}px)`;
+    enter($("#top5"), t, B(6) + 0.3, 0.7, 14); rise(tag5, t, B(6) + 0.35, 0.85, 0.1);
+    rise(sub5, t, B(7) - 0.1, 0.8, 0.1);
+  },
+  (t) => {
+    rise(h6, t, B(8) - 0.25);
+    enter($("#c6a"), t, B(8) + 0.2, 0.7, 30); enter($("#c6b"), t, B(8) + 0.2 + BEAT, 0.7, 30);
+    $("#f6a").textContent = Math.round(38 * EXPO(prog(t, B(8) + 0.2, 1.0)));
+    $("#f6b").textContent = Math.round(1412 * EXPO(prog(t, B(8) + 0.2 + BEAT, 1.2))).toLocaleString("en-GB");
+    enter($("#files6"), t, B(9) - 0.15, 0.8, 30);
+    $$(".f6 .tag").forEach((g, i) => enter(g, t, B(9) + 0.4 + i * BEAT, 0.5, 8));
+  },
+  (t) => {
+    rise(h7, t, B(10) - 0.25);
+    const fr = $$("#film .frame");
+    fr.forEach((f, i) => enter(f, t, B(10) - 0.05 + i * 0.08, 0.7, 30));
+    // clicks on the grid: 1.5, 3 and 4.5 beats into the scene; the cursor moves one frame per click
+    const clicks = [1.5, 3, 4.5].map((b) => B(10) + b * BEAT);
+    let pos = 0; clicks.forEach((c) => (pos += INOUT(prog(t, c - 0.45, 0.45))));
+    fr.forEach((f, i) => (f.querySelector(".st").style.opacity = (i === 0 ? t > clicks[0] - 0.4 : pos >= i - 0.02 && t > clicks[i - 1] + 0.05 + (i === 3 ? 0.1 : 0)) ? 1 : 0));
+    const cell = (i) => [72 + (i % 2) * 486 + 300, 520 + Math.floor(i / 2) * 431 + 190];
+    const i0 = Math.min(3, Math.floor(pos)), fk = pos - i0, a = cell(i0), b = cell(Math.min(3, i0 + 1));
+    $("#cur").style.translate = `${lerp(a[0], b[0], fk)}px ${lerp(a[1], b[1], fk) - Math.sin(fk * Math.PI) * 30}px`;
+    $("#cur").style.opacity = EXPO(prog(t, B(10), 0.3));
+    const ring = EXPO(prog(t, clicks[2], 0.4));
+    fr[3].querySelector(".shot").style.boxShadow = `0 0 0 2px #fff, 0 0 0 ${4 * ring}px rgba(159,47,45,${ring})`;
+    rise(l7, t, B(11) + 0.2, 0.8, 0.1);
+  },
+  (t) => { rise(h8, t, B(12) - 0.2, 0.9, 0.1); rise(l8, t, B(12) + 0.7, 0.8, 0.1); },
+  (t) => {
+    rise(h9, t, B(13) - 0.25); rise(q9, t, B(13) + 0.3, 0.85, 0.1);
+    enter($("#vis9"), t, B(14) - 0.15, 0.8, 30);
+    const k = EXPO(prog(t, B(14) + 0.2, 1.1)); $("#pc9").textContent = Math.round(33 * k); $("#mt9").style.width = `${33 * k}%`;
+    $$(".r9").forEach((r, i) => enter(r, t, B(14) + 2 * BEAT + i * 0.09, 0.6, 10));
+  },
+  (t) => {
+    rise(h10, t, B(15) - 0.25);
+    enter($("#ver10"), t, B(15) + 0.1, 0.8, 30);
+    const ks = EXPO(prog(t, B(15) + 0.4, 1.0)); $("#now10").setAttribute("stroke-dashoffset", LEN * (1 - 0.46 * ks)); $("#sc10").textContent = Math.round(46 * ks);
+    const ka = EXPO(prog(t, B(15) + 2 * BEAT, 1.0)); $("#aft10").setAttribute("stroke-dashoffset", LEN * (1 - 0.88 * ka));
+    enter($("#ab10"), t, B(15) + 2 * BEAT + 0.2, 0.6, 8);
+    enter($("#fix10"), t, B(16) - 0.2, 0.8, 30);
+    const acc = $("#acc10"), ko = INOUT(prog(t, B(16) + BEAT, 0.8)); acc.style.height = `${ko * acc.scrollHeight}px`;
+  },
+  (t) => {
+    $$("#bands .band").forEach((b, i) => {
+      enter(b, t, B(17) - 0.3 + i * 0.07, 0.7, 20);
+      const on = OUT2(prog(t, B(17) + i * 2 * BEAT, 0.4));
+      b.style.background = `color-mix(in srgb, ${BANDS[i][2]} ${on * 100}%, #fbfbfa)`;
+      grey(b.querySelector(".bs"), 1 - on);
+      const tg = b.querySelector(".toggle"); tg.style.background = `color-mix(in srgb, #111 ${on * 100}%, #e2e1dd)`; tg.querySelector("i").style.translate = `${on}em 0`;
+    });
+  },
+  (t) => {
+    const k = EXPO(prog(t, B(19), 1.5));
+    $("#word12").style.transform = `translateY(${(1 - k) * 1900}px) translateY(${-40 * SOFT(prog(t, B(19) + 1, 1.5))}px)`;
+    enter($("#top12"), t, B(19) + 0.2, 0.7, 14); rise(cta12, t, B(19) + 0.15, 0.85, 0.1); rise(sub12, t, B(19) + 0.5, 0.8, 0.1);
+  },
+];
+function OUT2(k) { return 1 - Math.pow(1 - k, 3); }
+
+const scenes = $$(".scene").map((el, i) => ({ el, i, field: el.dataset.field, content: el.querySelector(".content"), a: B(SC[i][0]), b: B(SC[i][0] + SC[i][1]) }));
+function seek(t) {
+  scenes.forEach((s, i) => {
+    const prev = scenes[i - 1], next = scenes[i + 1];
+    const sameIn = prev && prev.field === s.field, sameOut = next && next.field === s.field;
+    const start = i === 0 ? 0 : sameIn ? s.a - 0.05 : s.a - WIPE;
+    const end = next ? next.a + 0.02 : TOTAL + 1;
+    if (t < start || t > end) { s.el.style.display = "none"; return; }
+    s.el.style.display = "block"; s.el.style.zIndex = i + 1;
+    s.el.style.background = sameIn && t < s.a + 0.02 ? "transparent" : s.field;
+    // a new field wipes up from the bottom and lands on the bar line; the same field needs none
+    const k = i && !sameIn ? INOUT(prog(t, start, WIPE)) : 1;
+    s.el.style.clipPath = k < 1 ? `inset(${(1 - k) * 100}% 0 0 0)` : "none";
+    const push = 1 + 0.02 * prog(t, s.a, s.b - s.a);
+    if (sameOut) {
+      // the old content leaves just before the bar line, then the new content rises
+      const g = EXIT(prog(t, s.b - 0.4, 0.32));
+      s.content.style.opacity = 1 - g;
+      s.content.style.transform = `translateY(${-24 * g}px) scale(${push})`;
+    } else {
+      const lift = next ? INOUT(prog(t, s.b - WIPE, WIPE)) : 0;
+      s.content.style.transform = `translateY(${-90 * lift}px) scale(${push})`;
+    }
+    fns[i](t);
+  });
+  document.body.style.opacity = 1 - INOUT(prog(t, TOTAL - 0.6, 0.6));
+}
+window.seek = seek;
+</script>
+</body>
+</html>
